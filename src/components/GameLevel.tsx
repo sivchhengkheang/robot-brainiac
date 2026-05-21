@@ -655,7 +655,7 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
               </div>
             </div>
           );
-          cellBgClass = 'bg-yellow-100/60 border-yellow-500/50 shadow-[0_0_25px_rgba(234,179,8,0.5)] z-10 transform scale-105 transition-all duration-500 ring-4 ring-yellow-300';
+          cellBgClass = 'bg-yellow-100/60 border-[3px] border-yellow-300 shadow-[0_0_25px_rgba(234,179,8,0.5)] z-10 transform scale-105 transition-all duration-500';
         } else {
           cellContent = (
             <div className="relative flex items-center justify-center w-full h-full -translate-y-2">
@@ -666,7 +666,7 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
       }
 
       if (gameStatus === 'failure' && failureReason === 'crashed' && x === robotPos.x && y === robotPos.y) {
-        cellBgClass = `${cellBgClass} animate-crash-pulse ring-4 ring-red-500 z-20`;
+        cellBgClass = `${cellBgClass} animate-crash-pulse border-4 border-red-500 z-20`;
       }
 
       cells.push(
@@ -693,14 +693,14 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
           {/* START Cell Glow */}
           {isStart && isActive && (
             <div className="absolute inset-0 rounded-xl animate-glow-pulse-blue pointer-events-none">
-              <div className="absolute inset-0 rounded-xl ring-2 ring-blue-400/50 ring-offset-2 ring-offset-white/50"></div>
+              <div className="absolute inset-0 rounded-xl border-[2px] border-blue-400/50"></div>
             </div>
           )}
 
           {/* GOAL Cell Glow */}
           {isGoal && !cellContent && gameStatus !== 'success' && (
             <div className="absolute inset-0 rounded-xl animate-glow-pulse-gold pointer-events-none">
-              <div className="absolute inset-0 rounded-xl ring-2 ring-yellow-400/60 ring-offset-2 ring-offset-white/50"></div>
+              <div className="absolute inset-0 rounded-xl border-[3px] border-yellow-400/60"></div>
             </div>
           )}
 
@@ -738,14 +738,14 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
       return baseClass + " relative"; // Ensure relative for consistency
     }
     if (tutorialFeedback === 'error' && currentTutorialStep.highlightElementId === elementId) {
-      return `${baseClass} ring-4 ring-red-400 bg-red-100 animate-shake relative z-20`;
+      return `${baseClass} border-[3px] border-red-400 bg-red-100 animate-shake relative z-20`;
     }
-    return `${baseClass} ring-4 ring-yellow-400 ring-offset-2 animate-pulse bg-gray-100 relative z-20`;
+    return `${baseClass} border-[3px] border-yellow-400 animate-pulse bg-gray-100 relative z-20`;
   };
 
   // Helper component for the hand pointer
   const HandPointer = () => (
-    <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 text-3xl animate-bounce z-50 pointer-events-none drop-shadow-md">
+    <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 text-2xl animate-bounce z-50 pointer-events-none drop-shadow-md">
       👆
     </div>
   );
@@ -923,30 +923,30 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
       )}
 
       {/* Top Bar */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3 shadow-sm z-30 flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-3">
+      <div className="bg-white border-b border-gray-200 px-2 sm:px-4 py-0.5 sm:py-4 shadow-sm z-30 flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
           <button
             onClick={onBack}
-            className="p-2 rounded-xl hover:bg-gray-100 text-gray-500 transition-colors"
+            className="p-1.5 sm:p-2 rounded-xl hover:bg-gray-100 text-gray-500 transition-colors shrink-0"
             title={t.buttons?.back || "Back"}
           >
             <Home size={20} />
           </button>
-          <div className="h-6 w-px bg-gray-200 mx-1"></div>
-          <div>
-            <h2 className="font-bold text-gray-800 text-lg leading-tight flex items-center gap-5">
+          <div className="hidden sm:block h-6 w-px bg-gray-200 mx-1"></div>
+          <div className="min-w-0 flex-1">
+            <h2 className="font-bold text-gray-800 text-sm sm:text-lg leading-tight flex items-center gap-2 sm:gap-5 truncate">
               {isTutorial ? (language === "km" ? "ការបង្រៀន" : "Tutorial") : (language === "km" ? "មេរៀនទី " : "Level ") + level.id}
-              {isTutorial && <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">Tutorial</span>}
+              {isTutorial && <span className="text-[9px] sm:text-xs px-1.5 sm:px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full shrink-0">Tutorial</span>}
             </h2>
-            <p className="text-xs text-gray-500">{level.instruction || (language === 'km' ? 'បញ្ជាមនុស្សយន្តទៅកាន់គោលដៅ' : 'Guide the robot to the goal')}</p>
+            <p className="text-[10px] sm:text-xs text-gray-500 truncate">{level.instruction || (language === 'km' ? 'បញ្ជាមនុស្សយន្ត' : 'Guide the robot')}</p>
           </div>
 
           {/* Block Count Indicator */}
-          <div className="ml-auto mr-4">
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-lg border border-gray-200">
-              <Square size={14} className="text-gray-400" />
+          <div className="shrink-0 mx-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-gray-50 rounded-lg border border-gray-200">
+              <Square size={12} className="text-gray-400 sm:w-3.5 sm:h-3.5" />
               <span className={
-                `font-bold text-sm transition-colors ${blocks.length <= optimalBlockCount
+                `font-bold text-xs sm:text-sm transition-colors ${blocks.length <= optimalBlockCount
                   ? 'text-green-600'
                   : blocks.length <= optimalBlockCount + 3
                     ? 'text-yellow-600'
@@ -955,8 +955,8 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
               }>
                 {blocks.length}
               </span>
-              <span className="text-xs text-gray-400">/</span>
-              <span className="text-xs text-gray-500 font-medium">
+              <span className="text-[10px] sm:text-xs text-gray-400">/</span>
+              <span className="text-[10px] sm:text-xs text-gray-500 font-medium">
                 {optimalBlockCount}
               </span>
             </div>
@@ -985,19 +985,20 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                 : 'bg-gradient-to-r from-slate-50 to-blue-50'
               }`}>
 
-              <div className="relative px-6 py-4">
+              <div className="relative px-2 md:px-6 py-2 sm:py-4">
                 <div className="flex items-start gap-4 max-w-3xl mx-auto">
 
                   {/* Robot Character — alive and expressive */}
                   <div className="flex flex-col items-center gap-1.5 shrink-0">
-                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${tutorialFeedback === 'error'
+                    <div className={`w-9 h-9 md:w-14 md:h-14 rounded-lg md:rounded-2xl flex items-center justify-center transition-all duration-300 ${tutorialFeedback === 'error'
                       ? 'bg-gradient-to-br from-amber-100 to-orange-200 shadow-md shadow-amber-200/50 animate-[wiggle_0.5s_ease-in-out]'
                       : tutorialFeedback === 'success'
                         ? 'bg-gradient-to-br from-emerald-100 to-green-200 shadow-md shadow-green-200/50 scale-110'
                         : 'bg-gradient-to-br from-blue-100 to-indigo-200 shadow-md shadow-blue-200/50'
                       }`}>
-                      <span className="text-3xl select-none" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}>
-                        {tutorialFeedback === 'error' ? '🤔' : tutorialFeedback === 'success' ? '🥳' : '🤖'}
+                      <span className="text-xl select-none" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}>
+                        {/* {tutorialFeedback === 'error' ? '🤔' : tutorialFeedback === 'success' ? '🥳' : '🤖'} */}
+                        🤖
                       </span>
                     </div>
                     <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Robo</span>
@@ -1006,7 +1007,7 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                   {/* Speech Bubble */}
                   <div className="flex-1 min-w-0">
                     {/* Bubble container */}
-                    <div className={`relative rounded-2xl rounded-tl-sm px-4 py-3 transition-all duration-300 ${tutorialFeedback === 'error'
+                    <div className={`relative rounded-2xl rounded-tl-sm px-2 py-2 md:px-4 md:py-3 transition-all duration-300 ${tutorialFeedback === 'error'
                       ? 'bg-amber-100/80 border border-amber-200/60'
                       : tutorialFeedback === 'success'
                         ? 'bg-emerald-100/80 border border-emerald-200/60'
@@ -1047,7 +1048,7 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                     </div>
 
                     {/* Step Dots + Progress — visual progression */}
-                    <div className="flex items-center gap-2 mt-2.5 px-1">
+                    <div className="hidden md:flex items-center gap-2 mt-2.5 px-1">
                       <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider shrink-0">
                         {language === 'km' ? 'ការណែនាំ' : 'Tutorial'}
                       </span>
@@ -1082,7 +1083,7 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
             </div>
           )}
           {/* Grid Area */}
-          <div ref={gridContainerRef} className={`flex-1 relative flex items-center justify-center p-4 ${themeColors.bg} overflow-hidden`}>
+          <div ref={gridContainerRef} className={`flex-1 relative flex items-center justify-center p-2 sm:p-4 ${themeColors.bg} overflow-hidden`}>
 
             <div className="relative w-full h-full">
               {/* The Grid Render */}
@@ -1113,7 +1114,7 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                     className={`transform transition-transform duration-300 ${isJumping ? 'animate-jump-arc' : ''}`}
                   >
                     <span className="filter drop-shadow-xl loading-none select-none relative z-10 block" style={{ fontSize: `${sizing.robot}px` }}>
-                      {gameStatus === 'success' ? '🥳' :
+                      {gameStatus === 'success' ? '🤖' :
                         gameStatus === 'failure' ? '😵' :
                           gameStatus === 'running' ? '🤖' : '🤖'}
                     </span>
@@ -1127,13 +1128,12 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
 
 
         {/* Right: Controls Panel */}
-        <div className="w-full md:w-80 lg:w-96 bg-white border-t md:border-t-0 md:border-l border-gray-200 flex flex-col shadow-xl z-20 shrink-0 h-[45%] md:h-full">
-
+        <div className="w-full md:w-80 lg:w-96 bg-white border-t md:border-t-0 md:border-l border-gray-200 flex flex-col shadow-xl z-20 shrink-0 h-[55%] md:h-full">
 
           {/* Controls Header */}
-          <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-white shrink-0">
-            <span className="text-sm font-bold text-gray-700 flex items-center gap-2">
-              <Code size={18} className="text-blue-500" />
+          <div className="px-2 py-1 sm:p-4 border-b border-gray-100 flex items-center justify-between bg-white shrink-0">
+            <span className="text-xs sm:text-sm font-bold text-gray-700 flex items-center gap-2">
+              <Code size={18} className="text-blue-500 sm:w-[18px] sm:h-[18px] w-4 h-4" />
               {language === 'km' ? 'កម្មវិធីរបស់អ្នក' : 'Your Program'}
             </span>
             <div className="flex items-center gap-2">
@@ -1166,15 +1166,15 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
           </div>
 
           {/* Program Queue (Editable Area) - TOP */}
-          <div className="flex-1 overflow-y-auto p-4 bg-gray-50/50 relative">
+          <div className="flex-1 overflow-y-auto p-2 sm:p-4 bg-gray-50/50 relative">
             <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none bg-[radial-gradient(#9ca3af_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
             <div className="min-h-full space-y-2 relative z-10">
               {blocks.length === 0 && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-300 pointer-events-none">
-                  <GripVertical size={48} className="mb-4 opacity-20" />
-                  <p className="text-lg font-medium">{t.commandPalette?.dragDrop || "Drag commands here"}</p>
-                  <p className="text-sm opacity-60">{t.commandPalette?.orTap || "or tap buttons below"}</p>
+                  <GripVertical size={25} className="mb-4 opacity-20" />
+                  <p className="text-[10px] font-medium">{t.commandPalette?.dragDrop || "Drag commands here"}</p>
+                  <p className="text-[10px] opacity-60">{t.commandPalette?.orTap || "or tap buttons below"}</p>
                 </div>
               )}
 
@@ -1190,17 +1190,17 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                     <div
                       data-block-id={block.id}
                       className={`
-                      group relative flex items-center gap-3 p-2 rounded-xl border transition-all cursor-pointer select-none
+                      group relative flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-xl border transition-all cursor-pointer select-none outline-none focus:outline-none
                       ${selectedBlockId === block.id
                           ? 'bg-blue-50 border-blue-300 shadow-md transform scale-[1.01] z-10'
                           : currentStepIndex === index && gameStatus === 'running'
-                            ? 'bg-yellow-50 border-yellow-400 ring-2 ring-yellow-400 ring-offset-2 shadow-lg animate-block-execute'
+                            ? 'bg-yellow-50 border-[3px] border-yellow-400 shadow-lg animate-block-execute'
                             : gameStatus === 'running'
                               ? 'bg-white border-gray-200 opacity-40'
                               : 'bg-white border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md'
                         }
                       ${draggedBlockIndex === index ? 'opacity-30' : ''}
-                      ${currentStepIndex === index ? 'ring-2 ring-yellow-400 ring-offset-2 bg-yellow-50 border-yellow-200' : ''}
+                      ${currentStepIndex === index ? 'border-[3px] border-yellow-400 bg-yellow-50' : ''}
                     `}
                       onClick={() => toggleSelectBlock(block.id)}
                       draggable={gameStatus !== 'running'}
@@ -1211,14 +1211,14 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                     >
                       {/* Icon Box */}
                       <div className={`
-                      w-8 h-8 rounded-lg flex items-center justify-center
+                      w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center
                       ${block.type.toString().includes('JUMP') ? 'bg-purple-100 text-purple-600' : 'bg-green-100 text-green-600'}
                     `}>
                         {renderIcon(block.type)}
                       </div>
 
                       {/* Text Label */}
-                      <span className="font-semibold text-gray-700 text-sm capitalize">
+                      <span className="font-semibold text-gray-700 text-xs sm:text-sm capitalize">
                         {block.type.replace('JUMP_', 'Jump ').toLowerCase()}
                       </span>
 
@@ -1251,35 +1251,34 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
           <div className="bg-white border-t-2 border-gray-300 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.15)] z-30 shrink-0">
 
             {/* Section Header with Visual Prominence */}
-            <div className="px-6 pt-4 pb-3 bg-gradient-to-b from-gray-50 to-white">
-              <div className="flex items-center justify-center gap-2 mb-1">
+            <div className="hidden md:block px-3 pt-2 pb-1.5 sm:px-6 sm:pt-4 sm:pb-3 bg-gradient-to-b from-gray-50 to-white">
+              <div className="flex items-center justify-center gap-2 mb-1 sm:mb-1">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent to-gray-300"></div>
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
-                  <Code size={14} className="text-blue-500" />
+                <span className="text-[8px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+                  <Code size={10} className="text-blue-500 sm:w-3.5 sm:h-3.5" />
                   {language === 'km' ? 'ពាក្យបញ្ជា' : 'Commands'}
                 </span>
                 <div className="h-px flex-1 bg-gradient-to-l from-transparent to-gray-300"></div>
               </div>
-              {/* <p className="text-[10px] text-center text-gray-400 mt-1">⌨️ Arrow Keys • WASD</p> */}
             </div>
 
-            <div className="px-6 pb-4 grid grid-cols-2 gap-8">
+            <div className="px-2 sm:px-6 pb-2 sm:pb-4 flex justify-center gap-4 sm:gap-8">
               {/* LEFT: Movement D-Pad */}
               <div className="flex flex-col items-center">
-                <div className="text-[10px] font-bold text-green-600 mb-2 uppercase tracking-wider flex items-center gap-1">
+                <div className="text-[9px] sm:text-[10px] font-bold text-green-600 mb-1 sm:mb-2 uppercase tracking-wider flex items-center gap-1">
                   <span>{t.commandPalette?.move || "Move"}</span>
                   <span className="text-gray-400">•</span>
                   <span className="text-gray-400 font-normal">{t.commandPalette?.oneCell || "1 Cell"}</span>
                 </div>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-1 sm:gap-2">
                   <div></div>
                   <button
                     onClick={() => addBlock(CommandType.Up)}
                     disabled={gameStatus === 'running'}
-                    className={getButtonClass('btn-up', "w-12 h-12 bg-green-50 rounded-xl border-2 border-green-100 hover:border-green-300 hover:bg-green-100 active:scale-95 transition-all flex items-center justify-center text-green-600 shadow-sm")}
+                    className={getButtonClass('btn-up', "w-9 h-9 sm:w-12 sm:h-12 bg-green-50 rounded-lg sm:rounded-xl border sm:border-[3px] border-green-200 hover:border-green-300 hover:bg-green-100 active:scale-95 transition-all flex items-center justify-center text-green-600 shadow-sm outline-none focus:outline-none")}
                     title="⌨️ ↑ Arrow Up • W"
                   >
-                    <ArrowUp size={24} strokeWidth={2.5} />
+                    <ArrowUp size={14} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
                     {currentTutorialStep?.highlightElementId === 'btn-up' && <HandPointer />}
                   </button>
                   <div></div>
@@ -1287,22 +1286,22 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                   <button
                     onClick={() => addBlock(CommandType.Left)}
                     disabled={gameStatus === 'running'}
-                    className={getButtonClass('btn-left', "w-12 h-12 bg-green-50 rounded-xl border-2 border-green-100 hover:border-green-300 hover:bg-green-100 active:scale-95 transition-all flex items-center justify-center text-green-600 shadow-sm")}
+                    className={getButtonClass('btn-left', "w-9 h-9 sm:w-12 sm:h-12 bg-green-50 rounded-lg sm:rounded-xl border sm:border-[3px] border-green-200 hover:border-green-300 hover:bg-green-100 active:scale-95 transition-all flex items-center justify-center text-green-600 shadow-sm outline-none focus:outline-none")}
                     title="⌨️ ← Arrow Left • A"
                   >
-                    <ArrowLeft size={24} strokeWidth={2.5} />
+                    <ArrowLeft size={14} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
                     {currentTutorialStep?.highlightElementId === 'btn-left' && <HandPointer />}
                   </button>
-                  <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center">
-                    <div className="w-2 h-2 bg-gray-200 rounded-full"></div>
+                  <div className="w-9 h-9 sm:w-12 sm:h-12 bg-gray-50 rounded-full flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-200 rounded-full"></div>
                   </div>
                   <button
                     onClick={() => addBlock(CommandType.Right)}
                     disabled={gameStatus === 'running'}
-                    className={getButtonClass('btn-right', "w-12 h-12 bg-green-50 rounded-xl border-2 border-green-100 hover:border-green-300 hover:bg-green-100 active:scale-95 transition-all flex items-center justify-center text-green-600 shadow-sm")}
+                    className={getButtonClass('btn-right', "w-9 h-9 sm:w-12 sm:h-12 bg-green-50 rounded-lg sm:rounded-xl border sm:border-[3px] border-green-200 hover:border-green-300 hover:bg-green-100 active:scale-95 transition-all flex items-center justify-center text-green-600 shadow-sm outline-none focus:outline-none")}
                     title="⌨️ → Arrow Right • D"
                   >
-                    <ArrowRight size={24} strokeWidth={2.5} />
+                    <ArrowRight size={14} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
                     {currentTutorialStep?.highlightElementId === 'btn-right' && <HandPointer />}
                   </button>
 
@@ -1310,10 +1309,10 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                   <button
                     onClick={() => addBlock(CommandType.Down)}
                     disabled={gameStatus === 'running'}
-                    className={getButtonClass('btn-down', "w-12 h-12 bg-green-50 rounded-xl border-2 border-green-100 hover:border-green-300 hover:bg-green-100 active:scale-95 transition-all flex items-center justify-center text-green-600 shadow-sm")}
+                    className={getButtonClass('btn-down', "w-9 h-9 sm:w-12 sm:h-12 bg-green-50 rounded-lg sm:rounded-xl border sm:border-[3px] border-green-200 hover:border-green-300 hover:bg-green-100 active:scale-95 transition-all flex items-center justify-center text-green-600 shadow-sm outline-none focus:outline-none")}
                     title="⌨️ ↓ Arrow Down • S"
                   >
-                    <ArrowDown size={24} strokeWidth={2.5} />
+                    <ArrowDown size={14} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
                     {currentTutorialStep?.highlightElementId === 'btn-down' && <HandPointer />}
                   </button>
                   <div></div>
@@ -1322,20 +1321,20 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
 
               {/* RIGHT: Jump D-Pad */}
               <div className="flex flex-col items-center">
-                <div className="text-[10px] font-bold text-purple-600 mb-2 uppercase tracking-wider flex items-center gap-1">
+                <div className="text-[9px] sm:text-[10px] font-bold text-purple-600 mb-1 sm:mb-2 uppercase tracking-wider flex items-center gap-1">
                   <span>{t.commandPalette?.jump || "Jump"}</span>
                   <span className="text-gray-400">•</span>
                   <span className="text-gray-400 font-normal">{t.commandPalette?.twoCells || "2 Cells"}</span>
                 </div>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-1 sm:gap-2 item-center justify-center">
                   <div></div>
                   <button
                     onClick={() => addBlock(CommandType.JumpUp)}
                     disabled={gameStatus === 'running'}
-                    className={getButtonClass('btn-jump-up', "w-12 h-12 bg-purple-50 rounded-xl border-2 border-purple-100 hover:border-purple-300 hover:bg-purple-100 active:scale-95 transition-all flex items-center justify-center text-purple-600 shadow-sm")}
+                    className={getButtonClass('btn-jump-up', "w-9 h-9 sm:w-12 sm:h-12 bg-purple-50 rounded-lg sm:rounded-xl border sm:border-[3px] border-purple-200 hover:border-purple-300 hover:bg-purple-100 active:scale-95 transition-all flex items-center justify-center text-purple-600 shadow-sm outline-none focus:outline-none")}
                     title="Jump Up (2 cells)"
                   >
-                    <ChevronsUp size={24} strokeWidth={2.5} />
+                    <ChevronsUp size={14} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
                     {currentTutorialStep?.highlightElementId === 'btn-jump-up' && <HandPointer />}
                   </button>
                   <div></div>
@@ -1343,22 +1342,22 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                   <button
                     onClick={() => addBlock(CommandType.JumpLeft)}
                     disabled={gameStatus === 'running'}
-                    className={getButtonClass('btn-jump-left', "w-12 h-12 bg-purple-50 rounded-xl border-2 border-purple-100 hover:border-purple-300 hover:bg-purple-100 active:scale-95 transition-all flex items-center justify-center text-purple-600 shadow-sm")}
+                    className={getButtonClass('btn-jump-left', "w-9 h-9 sm:w-12 sm:h-12 bg-purple-50 rounded-lg sm:rounded-xl border sm:border-[3px] border-purple-200 hover:border-purple-300 hover:bg-purple-100 active:scale-95 transition-all flex items-center justify-center text-purple-600 shadow-sm outline-none focus:outline-none")}
                     title="Jump Left (2 cells)"
                   >
-                    <ChevronsLeft size={24} strokeWidth={2.5} />
+                    <ChevronsLeft size={14} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
                     {currentTutorialStep?.highlightElementId === 'btn-jump-left' && <HandPointer />}
                   </button>
-                  <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center">
-                    <div className="w-2 h-2 bg-gray-200 rounded-full"></div>
+                  <div className="w-9 h-9 sm:w-12 sm:h-12 bg-gray-50 rounded-full flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-200 rounded-full"></div>
                   </div>
                   <button
                     onClick={() => addBlock(CommandType.JumpRight)}
                     disabled={gameStatus === 'running'}
-                    className={getButtonClass('btn-jump-right', "w-12 h-12 bg-purple-50 rounded-xl border-2 border-purple-100 hover:border-purple-300 hover:bg-purple-100 active:scale-95 transition-all flex items-center justify-center text-purple-600 shadow-sm")}
+                    className={getButtonClass('btn-jump-right', "w-9 h-9 sm:w-12 sm:h-12 bg-purple-50 rounded-lg sm:rounded-xl border sm:border-[3px] border-purple-200 hover:border-purple-300 hover:bg-purple-100 active:scale-95 transition-all flex items-center justify-center text-purple-600 shadow-sm outline-none focus:outline-none")}
                     title="Jump Right (2 cells)"
                   >
-                    <ChevronsRight size={24} strokeWidth={2.5} />
+                    <ChevronsRight size={14} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
                     {currentTutorialStep?.highlightElementId === 'btn-jump-right' && <HandPointer />}
                   </button>
 
@@ -1366,10 +1365,10 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                   <button
                     onClick={() => addBlock(CommandType.JumpDown)}
                     disabled={gameStatus === 'running'}
-                    className={getButtonClass('btn-jump-down', "w-12 h-12 bg-purple-50 rounded-xl border-2 border-purple-100 hover:border-purple-300 hover:bg-purple-100 active:scale-95 transition-all flex items-center justify-center text-purple-600 shadow-sm")}
+                    className={getButtonClass('btn-jump-down', "w-9 h-9 sm:w-12 sm:h-12 bg-purple-50 rounded-lg sm:rounded-xl border sm:border-[3px] border-purple-200 hover:border-purple-300 hover:bg-purple-100 active:scale-95 transition-all flex items-center justify-center text-purple-600 shadow-sm outline-none focus:outline-none")}
                     title="Jump Down (2 cells)"
                   >
-                    <ChevronsDown size={24} strokeWidth={2.5} />
+                    <ChevronsDown size={14} className="sm:w-6 sm:h-6" strokeWidth={2.5} />
                     {currentTutorialStep?.highlightElementId === 'btn-jump-down' && <HandPointer />}
                   </button>
                   <div></div>
@@ -1377,8 +1376,8 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
               </div>
             </div>
 
-            <div className="p-4 bg-gray-50 border-t border-gray-200">
-              <div className="flex gap-3">
+            <div className="px-2 py-1 sm:p-4 bg-gray-50 border-t border-gray-200">
+              <div className="flex gap-2 sm:gap-3">
                 <button
                   onClick={() => {
                     // Confirm reset?
@@ -1386,16 +1385,16 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                       resetGame();
                     }
                   }}
-                  className="px-4 rounded-xl bg-white border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-100 font-bold shadow-sm transition-colors"
+                  className="p-2 sm:px-4 rounded-xl bg-white border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-100 font-bold shadow-sm transition-colors outline-none focus:outline-none"
                   title="Reset Level"
                 >
-                  <RotateCcw size={20} />
+                  <RotateCcw size={14} className="sm:w-5 sm:h-5" />
                 </button>
                 <button
                   onClick={handleRun}
                   disabled={blocks.length === 0 && gameStatus !== 'running'}
                   className={getButtonClass('btn-run', `
-                     flex-1 h-14 rounded-xl font-bold text-white text-lg shadow-lg flex items-center justify-center gap-3 transition-all transform active:scale-[0.98]
+                     flex-1 h-8 sm:h-14 rounded-xl font-bold text-white text-sm sm:text-lg shadow-lg flex items-center justify-center gap-2 sm:gap-3 transition-all transform active:scale-[0.98] outline-none focus:outline-none
                      ${gameStatus === 'running'
                       ? 'bg-red-500 hover:bg-red-600 shadow-red-200'
                       : 'bg-gray-900 hover:bg-black shadow-gray-300'
@@ -1406,12 +1405,12 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                 >
                   {gameStatus === 'running' ? (
                     <>
-                      <Square size={20} className="fill-current" />
+                      <Square size={16} className="fill-current sm:w-6 sm:h-6" />
                       {t.stop || "STOP"}
                     </>
                   ) : (
                     <>
-                      <Play size={24} className="fill-current" />
+                      <Play size={20} className="fill-current sm:w-6 sm:h-6" />
                       {t.run || "RUN CODE"}
                     </>
                   )}
@@ -1456,7 +1455,7 @@ const GameLevel: React.FC<GameLevelProps> = ({ level, onBack, onNext, onComplete
                       {[1, 2, 3].map(star => (
                         <Star
                           key={star}
-                          className={`w-8 h-8 ${star <= earnedStars ? 'text-yellow-400 fill-yellow-400 animate-star-pop' : 'text-gray-200'}`}
+                          className={`w-9 h-9 ${star <= earnedStars ? 'text-yellow-400 fill-yellow-400 animate-star-pop' : 'text-gray-200'}`}
                           style={{ animationDelay: `${(star - 1) * 0.15}s` }}
                         />
                       ))}

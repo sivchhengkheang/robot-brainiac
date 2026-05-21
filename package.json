@@ -1,5 +1,5 @@
 {
-  "name": "robot-brainiac",
+  "name": "robot-obstacle",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,7 +9,10 @@
     "build": "vite build && tsc -p electron/tsconfig.json",
     "preview": "vite preview",
     "electron:dev": "concurrently -k \"cross-env BROWSER=none npm run dev\" \"wait-on tcp:3000 && electron .\"",
-    "electron:build": "vite build && tsc -p electron/tsconfig.json && electron-builder"
+    "electron:build": "vite build && tsc -p electron/tsconfig.json && electron-builder",
+    "build:linux": "vite build && tsc -p electron/tsconfig.json && electron-builder --linux AppImage",
+    "build:win": "vite build && tsc -p electron/tsconfig.json && electron-builder --win nsis",
+    "build:all": "vite build && tsc -p electron/tsconfig.json && electron-builder --linux AppImage --win nsis"
   },
   "dependencies": {
     "@google/genai": "^1.40.0",

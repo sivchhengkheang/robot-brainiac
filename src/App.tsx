@@ -199,7 +199,7 @@ const App: React.FC = () => {
   }, [language]);
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-purple-100 selection:text-purple-900">
+    <div className="h-screen w-screen overflow-hidden bg-gray-50 text-gray-900 font-sans selection:bg-purple-100 selection:text-purple-900 flex flex-col">
       {view === AppView.Menu ? (
         <>
           <HomePage
