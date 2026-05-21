@@ -38,8 +38,8 @@
     "wait-on": "^9.0.4"
   },
   "build": {
-    "appId": "com.robotbrainiac.app",
-    "productName": "Robot Brainiac",
+    "appId": "com.robotobstacle.app",
+    "productName": "Robot Obstacle",
     "files": [
       "dist/**/*",
       "dist-electron/**/*"
