@@ -47,6 +47,6 @@
     "directories": {
       "output": "release"
     },
-    "icon": "public/brainiac-logo.png"
+    "icon": "public/robot-obstacle.png"
   }
 }

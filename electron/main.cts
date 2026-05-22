@@ -16,8 +16,8 @@ function createWindow() {
             contextIsolation: false, // For simple projects, you might want this false or handle IPC in preload
         },
         icon: app.isPackaged
-            ? path.join(__dirname, '../dist/brainiac-logo.png')
-            : path.join(__dirname, '../public/brainiac-logo.png'),
+            ? path.join(__dirname, '../dist/robot-obstacle.png')
+            : path.join(__dirname, '../public/robot-obstacle.png'),
     });
 
     if (process.env.VITE_DEV_SERVER_URL) {
